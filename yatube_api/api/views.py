@@ -1,4 +1,4 @@
-from rest_framework import viewsets, filters, pagination, mixins
+from rest_framework import viewsets, filters, pagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 
@@ -37,11 +37,6 @@ class CommentViewSet(viewsets.ModelViewSet):
         post_id = self.kwargs.get('post_id')
         author = self.request.user
         serializer.save(post_id=post_id, author=author)
-
-
-class CreateListViewSet(mixins.CreateModelMixin, mixins.ListModelMixin,
-                        viewsets.GenericViewSet):
-    pass
 
 
 class FollowViewSet(viewsets.ModelViewSet):
