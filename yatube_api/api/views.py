@@ -1,6 +1,5 @@
 from rest_framework import viewsets, filters, pagination
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.response import Response
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -43,18 +42,10 @@ class FollowViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FollowSerializer
     permission_classes = (permissions.FollowPermission,)
     filter_backends = (filters.SearchFilter,)
+    search_fields = ('following__username',)
 
     def get_queryset(self):
         return Follow.objects.filter(user=self.request.user)
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        search_param = request.query_params.get('search')
-        if search_param:
-            queryset = queryset.filter(following__username=search_param)
-
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
 
     def perform_create(self, serializer):
         if serializer.is_valid():
