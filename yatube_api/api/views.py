@@ -1,5 +1,6 @@
 from rest_framework import viewsets, filters, pagination
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.permissions import IsAuthenticatedOrReadOnly, \
+    IsAuthenticated
 
 from django_filters.rest_framework import DjangoFilterBackend
 
@@ -40,7 +41,7 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 class FollowViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.FollowSerializer
-    permission_classes = (permissions.FollowPermission,)
+    permission_classes = (IsAuthenticated,)
     filter_backends = (filters.SearchFilter,)
     search_fields = ('following__username',)
 
