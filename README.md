@@ -73,6 +73,7 @@ python manage.py runserver
 ```
 
 ## Технологии
+* Python 3.9
 * Django
 * DRF
 * simplejwt
